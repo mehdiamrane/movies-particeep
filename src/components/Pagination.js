@@ -6,8 +6,13 @@ import {
   useColorModeValue as mode,
 } from '@chakra-ui/react';
 import { RiArrowLeftSLine, RiArrowRightSLine } from 'react-icons/ri';
+import { useSelector, useDispatch } from 'react-redux';
+import { changePage } from 'actions';
 
 const Pagination = () => {
+  const dispatch = useDispatch();
+  const pagination = useSelector(state => state.pagination);
+
   return (
     <Flex mx="auto" w="full" align="center" justify="center">
       <Flex
@@ -24,6 +29,10 @@ const Pagination = () => {
           fontSize="3xl"
           colorScheme="blue"
           aria-label="Previous page"
+          isDisabled={pagination.current === 1}
+          onClick={() => {
+            dispatch(changePage(pagination.current - 1));
+          }}
           icon={<RiArrowLeftSLine />}
         />
         <Box
@@ -32,12 +41,16 @@ const Pagination = () => {
           fontWeight="bold"
           color={mode('gray.700', 'gray.300')}
         >
-          1
+          {pagination.current}
         </Box>
         <IconButton
           fontSize="3xl"
           colorScheme="blue"
           aria-label="Next page"
+          isDisabled={pagination.current >= pagination.max}
+          onClick={() => {
+            dispatch(changePage(pagination.current + 1));
+          }}
           icon={<RiArrowRightSLine />}
         />
       </Flex>

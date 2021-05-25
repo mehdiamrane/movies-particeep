@@ -1,8 +1,11 @@
 import React from 'react';
 import { Grid } from '@chakra-ui/react';
 import MovieCard from 'components/MovieCard';
+import { useSelector } from 'react-redux';
 
 const MoviesGrid = () => {
+  const movies = useSelector(state => state.movies);
+
   return (
     <Grid
       templateColumns={{
@@ -13,9 +16,10 @@ const MoviesGrid = () => {
       }}
       gap={6}
     >
-      {new Array(12).fill(undefined).map((movie, i) => {
-        return <MovieCard key={i} />;
-      })}
+      {movies.displayed.length > 0 &&
+        movies.displayed.map((movie, i) => {
+          return <MovieCard movie={movie} key={movie.id} />;
+        })}
     </Grid>
   );
 };

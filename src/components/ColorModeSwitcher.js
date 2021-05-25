@@ -10,10 +10,11 @@ import { FaMoon, FaSun } from 'react-icons/fa';
 const ColorModeSwitcher = props => {
   const { toggleColorMode } = useColorMode();
   const text = mode('dark', 'light');
-  const SwitchIcon = mode(FaMoon, FaSun);
+  const SwitchIcon = mode(FaSun, FaMoon);
 
   return (
     <Tooltip
+      hasArrow
       label={`Switch to ${text} mode`}
       aria-label={`Switch to ${text} mode`}
     >
