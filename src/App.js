@@ -1,40 +1,21 @@
 import React from 'react';
-import {
-  ChakraProvider,
-  Box,
-  Text,
-  Link,
-  VStack,
-  Code,
-  Grid,
-  theme,
-} from '@chakra-ui/react';
-import { ColorModeSwitcher } from './ColorModeSwitcher';
-import { Logo } from './Logo';
+import { ChakraProvider, Box, theme, Flex } from '@chakra-ui/react';
+import NavBar from 'components/NavBar';
+import MoviesGrid from 'components/MoviesGrid';
+import Filters from 'components/Filters';
+import Pagination from 'components/Pagination';
 
 function App() {
   return (
     <ChakraProvider theme={theme}>
-      <Box textAlign="center" fontSize="xl">
-        <Grid minH="100vh" p={3}>
-          <ColorModeSwitcher justifySelf="flex-end" />
-          <VStack spacing={8}>
-            <Logo h="40vmin" pointerEvents="none" />
-            <Text>
-              Edit <Code fontSize="xl">src/App.js</Code> and save to reload.
-            </Text>
-            <Link
-              color="teal.500"
-              href="https://chakra-ui.com"
-              fontSize="2xl"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learn Chakra
-            </Link>
-          </VStack>
-        </Grid>
-      </Box>
+      <>
+        <NavBar />
+        <Box maxW="7xl" mx="auto" py={16} px={6}>
+          <Filters />
+          <MoviesGrid />
+          <Pagination />
+        </Box>
+      </>
     </ChakraProvider>
   );
 }
