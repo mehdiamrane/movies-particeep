@@ -1,5 +1,4 @@
-import React, { useRef } from 'react';
-
+import React, { useRef, useState } from 'react';
 import {
   AlertDialog,
   AlertDialogBody,
@@ -8,7 +7,11 @@ import {
   AlertDialogContent,
   AlertDialogOverlay,
   Button,
+  Checkbox,
 } from '@chakra-ui/react';
+
+import { useDispatch } from 'react-redux';
+import { toggleDialogPreferences } from 'actions';
 
 const ConfirmationDialog = ({
   isOpen,
@@ -19,11 +22,15 @@ const ConfirmationDialog = ({
   confirmButtonLabel,
 }) => {
   const cancelRef = useRef();
+  const dispatch = useDispatch();
+
+  const [isChecked, setIsChecked] = useState(false);
   const onClose = () => setIsOpen(false);
 
   const handleConfirm = () => {
     onClose();
     onConfirm();
+    isChecked && dispatch(toggleDialogPreferences());
   };
 
   return (
@@ -40,6 +47,13 @@ const ConfirmationDialog = ({
 
           <AlertDialogBody>
             {body || "Are you sure? You can't undo this action afterwards."}
+            <Checkbox
+              mt={4}
+              isChecked={isChecked}
+              onChange={e => setIsChecked(e.target.checked)}
+            >
+              Don't ask next time
+            </Checkbox>
           </AlertDialogBody>
 
           <AlertDialogFooter>

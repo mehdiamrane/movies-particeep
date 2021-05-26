@@ -1,7 +1,7 @@
 import React from 'react';
 import { Flex, Text, useColorModeValue as mode } from '@chakra-ui/react';
 
-const EmptyBox = ({ infoText }) => {
+const EmptyBox = ({ infoText, ...props }) => {
   return (
     <Flex
       align="center"
@@ -12,9 +12,10 @@ const EmptyBox = ({ infoText }) => {
       borderColor={mode('gray.200', 'gray.500')}
       px={6}
       py={12}
+      {...props}
     >
       <Text
-        fontSize="2xl"
+        fontSize={{ base: 'md', sm: 'xl', md: '2xl' }}
         fontWeight={600}
         color={mode('gray.700', 'gray.200')}
       >

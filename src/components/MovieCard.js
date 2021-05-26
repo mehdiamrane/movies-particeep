@@ -17,12 +17,13 @@ import {
   RiDeleteBinFill,
 } from 'react-icons/ri';
 import ConfirmationDialog from 'components/ConfirmationDialog';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { likeMovie, deleteMovie } from 'actions';
 
 const MovieCard = ({ movie }) => {
   const toast = useToast();
 
+  const userPreferences = useSelector(state => state.userPreferences);
   const dispatch = useDispatch();
 
   const handleLike = isLiked => {
@@ -35,6 +36,12 @@ const MovieCard = ({ movie }) => {
       status: isLiked ? 'info' : 'success',
       isClosable: true,
     });
+  };
+
+  const handleDeleteButton = () => {
+    userPreferences.alwaysShowConfirmationDialog
+      ? setIsDialogOpen(true)
+      : handleDelete(movie);
   };
 
   const handleDelete = movie => {
@@ -77,7 +84,7 @@ const MovieCard = ({ movie }) => {
               right={1}
               variant="ghost"
               aria-label="Delete movie"
-              onClick={() => setIsDialogOpen(true)}
+              onClick={() => handleDeleteButton(movie)}
               fontSize="xl"
               rounded="full"
               color={mode('gray.400', 'gray.200')}

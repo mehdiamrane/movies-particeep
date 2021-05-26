@@ -73,3 +73,9 @@ export const changeElementsPerPage = number => {
     payload: number,
   };
 };
+
+export const toggleDialogPreferences = () => {
+  return {
+    type: 'TOOGLE_DIALOG_PREFERENCES',
+  };
+};

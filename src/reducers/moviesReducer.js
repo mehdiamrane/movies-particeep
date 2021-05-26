@@ -5,10 +5,12 @@ const moviesReducer = (state = { all: [], displayed: [] }, action) => {
       stateCopy = { ...state };
       stateCopy.all = action.payload;
       return stateCopy;
+
     case 'SET_DISPLAYED_MOVIES':
       stateCopy = { ...state };
       stateCopy.displayed = action.payload;
       return stateCopy;
+
     case 'DELETE_MOVIE':
       stateCopy = { ...state };
       const newStateCopyAll = stateCopy.all.filter(
@@ -26,6 +28,7 @@ const moviesReducer = (state = { all: [], displayed: [] }, action) => {
         movie => movie.id === action.payload
       );
       const targetMovie = stateCopy.all[targetMovieId];
+      // Changes likes/dislikes count. Depends if the user already liked the movie or not (isLiked).
       if (targetMovie.isLiked === undefined) {
         targetMovie.likes += 1;
       } else if (targetMovie.isLiked) {

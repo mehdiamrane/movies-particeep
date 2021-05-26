@@ -1,6 +1,14 @@
-import { Box, Flex, Text, useColorModeValue as mode } from '@chakra-ui/react';
+import {
+  Box,
+  Flex,
+  Text,
+  Tooltip,
+  IconButton,
+  useColorModeValue as mode,
+} from '@chakra-ui/react';
 import ColorModeSwitcher from 'components/ColorModeSwitcher';
 import React from 'react';
+import { FaGithub } from 'react-icons/fa';
 
 const NavBar = () => {
   return (
@@ -22,8 +30,27 @@ const NavBar = () => {
         >
           Particeep Movies
         </Text>
+        <Box>
+          <Tooltip
+            hasArrow
+            label="View source code on Github"
+            aria-label="View source code on Github"
+          >
+            <IconButton
+              as="a"
+              href="https://github.com/mehdiamrane/movies-particeep"
+              target="blank"
+              size="sm"
+              fontSize="lg"
+              aria-label="View source code on Github"
+              variant="solid"
+              color="current"
+              icon={<FaGithub />}
+            />
+          </Tooltip>
 
-        <ColorModeSwitcher />
+          <ColorModeSwitcher />
+        </Box>
       </Flex>
     </Box>
   );

@@ -21,6 +21,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "deploy": "react-scripts build && cd build && surge --domain particeepmovies.surge.sh && cd ..",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

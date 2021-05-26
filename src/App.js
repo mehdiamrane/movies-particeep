@@ -3,7 +3,6 @@ import { ChakraProvider, Box, theme } from '@chakra-ui/react';
 import NavBar from 'components/NavBar';
 import MoviesGrid from 'components/MoviesGrid';
 import Filters from 'components/Filters';
-import EmptyBox from 'components/EmptyBox';
 import Pagination from 'components/Pagination';
 import { movies$ } from 'data/movies';
 import { useDispatch, useSelector } from 'react-redux';
@@ -33,10 +32,15 @@ function App() {
 
   useEffect(() => {
     let moviesCopy = [...movies.all];
+
     if (moviesCopy.length === 0 && movies.displayed.length === 0) {
+      // doing this because this useEffect runs before movies have been loaded.
       return;
     }
 
+    //
+    // Gets categories from movies and dispatch theme
+    //
     const tempCategories = [];
 
     for (var i = 0; i < moviesCopy.length; i++) {
@@ -48,12 +52,18 @@ function App() {
 
     dispatch(setAllCategories(tempCategories));
 
+    //
+    // Filters all movies based on selected categories (if any).
+    //
     if (categories.selected.length > 0) {
       moviesCopy = moviesCopy.filter(movie =>
         categories.selected.includes(movie.category)
       );
     }
 
+    //
+    // Sets max page and displayed movies per page
+    //
     dispatch(setMaxPage(moviesCopy.length / elementsPerPage));
 
     dispatch(
@@ -72,17 +82,9 @@ function App() {
       <>
         <NavBar />
         <Box maxW="7xl" mx="auto" py={16} px={6}>
-          {movies.displayed.length > 0 ? (
-            <>
-              <Filters />
-              <MoviesGrid />
-              <Pagination />
-            </>
-          ) : (
-            <EmptyBox
-              infoText={hasLoaded ? 'No more movies to display!' : 'Loading'}
-            />
-          )}
+          <Filters hasLoaded={hasLoaded} />
+          <MoviesGrid hasLoaded={hasLoaded} />
+          <Pagination hasLoaded={hasLoaded} />
         </Box>
       </>
     </ChakraProvider>
